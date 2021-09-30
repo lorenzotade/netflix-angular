@@ -9,6 +9,10 @@ import { HeaderComponent } from './header/header.component';
 import { ContentComponent } from './content/content.component';
 import { CardComponent } from './card/card.component';
 import {MatCardModule} from "@angular/material/card";
+import { SearchComponent } from './search/search.component';
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatInputModule} from "@angular/material/input";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -16,14 +20,18 @@ import {MatCardModule} from "@angular/material/card";
     AppComponent,
     HeaderComponent,
     ContentComponent,
-    CardComponent
+    CardComponent,
+    SearchComponent
   ],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		HttpClientModule,
-		MatCardModule
+		MatCardModule,
+		MatButtonToggleModule,
+		MatInputModule,
+		FormsModule
 	],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,6 +1,7 @@
 mat-card {
   position: relative;
-  width: 350px;
+  max-width: 350px;
+  min-width: 250px;
   min-height: 380px;
   padding: 20px;
   margin-bottom: 20px;

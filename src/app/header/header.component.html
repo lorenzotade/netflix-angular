@@ -4,8 +4,20 @@
   <nav>
     <ul>
       <li>
-        <a routerLink="/">Home</a>
+        <a routerLink="/home">Home</a>
+      </li>
+      <li>
+        <a routerLink="/search">Advanced Search</a>
       </li>
     </ul>
   </nav>
+
+  <div>
+    <form action="">
+      <mat-form-field appearance="fill">
+        <mat-label for="search">Search for a Movie</mat-label>
+        <input matInput type="text" id="search" name="search" [(ngModel)]="search: string"  (input)="searchMovies()">
+      </mat-form-field>
+    </form>
+  </div>
 </header>

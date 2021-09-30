@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MovieService} from "../movie.service";
 import {Movie} from "../Movie";
 import {Observable} from "rxjs";
+import {query} from "@angular/animations";
 ;
 
 @Component({
@@ -11,7 +12,10 @@ import {Observable} from "rxjs";
 })
 export class ContentComponent implements OnInit {
 
-  trend_movies: Movie[] = []
+  @Input() query!: string;
+
+  trend_movies: Movie[] = [];
+  searched_movies: Movie[] = [];
 
   constructor(private movieService: MovieService) { }
 
@@ -23,6 +27,13 @@ export class ContentComponent implements OnInit {
     this.movieService.getTrendingMovies()
       .subscribe( (data:any) => {
         this.trend_movies = data.results;
+      })
+  }
+
+  searchMovie(query: string) {
+    this.movieService.searchMovies(query)
+      .subscribe((data:any) => {
+        this.searched_movies = data.results;
       })
   }
 
