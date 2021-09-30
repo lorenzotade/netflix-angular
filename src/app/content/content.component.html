@@ -1,0 +1,8 @@
+<div *ngIf="trend_movies" class="container trending">
+  <h2>Trending Movies</h2>
+  <div class="p-5 d-flex justify-content-around flex-wrap">
+    <div *ngFor="let movie of trend_movies">
+      <app-card [movie]="movie"></app-card>
+    </div>
+  </div>
+</div>

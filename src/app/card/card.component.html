@@ -1,0 +1,12 @@
+<mat-card class="d-flex flex-column" (mouseenter)="toggleOverlay()" (mouseleave)="toggleOverlay()">
+  <mat-card-title>{{movie.original_title}}</mat-card-title>
+  <mat-card-subtitle>Vote: {{movie.vote_average}} ({{movie.vote_count}})</mat-card-subtitle>
+  <mat-card-subtitle>Release Date: {{movie.release_date | date: 'dd MMM YYYY'}}</mat-card-subtitle>
+  <img *ngIf="movie.backdrop_path" class="img-fluid align-self-center" src="https://image.tmdb.org/t/p/w500{{movie.backdrop_path}}" mat-card-image>
+  <div *ngIf="overlay" class="overlay">
+    <mat-card-title>{{movie.original_title}}</mat-card-title>
+    <mat-card-subtitle>Original Language: {{movie.original_language}}</mat-card-subtitle>
+    <mat-card-content>Overview: {{movie.overview}}</mat-card-content>
+  </div>
+</mat-card>
+

@@ -1,0 +1,23 @@
+mat-card {
+  position: relative;
+  width: 350px;
+  min-height: 380px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  padding: 20px;
+  background-color: rgba(0,0,0,.9);
+  color: #FFFFFF;
+  border-radius: 4px;
+  mat-card-subtitle {
+    color: #FFFFFF;
+    margin-bottom: 20px;
+  }
+}
