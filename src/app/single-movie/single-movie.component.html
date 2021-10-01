@@ -1,0 +1,53 @@
+<div class="container">
+  <mat-card class="mt-3">
+    <mat-card-title style="font-size: 30px">Credits</mat-card-title>
+
+    <div class="credits-container">
+      <div class="credits-content me-3">
+        <h2>Cast: </h2>
+        <mat-card class="cast-container">
+          <mat-card-content *ngFor="let member of credits.cast">
+            {{member.original_name}} -- {{member.character}}
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="credits-content me-3">
+        <h2>Crew: </h2>
+        <mat-card class="crew-container">
+          <mat-card-content *ngFor="let member of credits.crew">
+            {{member.original_name}} -- {{member.department}}
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="info-content">
+        <h2>Info: </h2>
+        <mat-card class="info-container d-flex flex-wrap">
+
+          <div class="genres me-3">
+            <h3>Genres: </h3>
+            <mat-card-content *ngFor="let genre of single_movie.genres">
+              {{genre.name}}
+            </mat-card-content>
+          </div>
+
+          <div class="budget me-3">
+            <h3>Budget: </h3>
+            <mat-card-content>{{single_movie.budget | currency: '$'}}</mat-card-content>
+          </div>
+
+          <div class="companies me-3">
+            <h3>Prod. Companies: </h3>
+            <mat-card-content *ngFor="let company of single_movie.production_companies">
+              {{company.name}}
+            </mat-card-content>
+          </div>
+
+        </mat-card>
+      </div>
+
+    </div>
+
+  </mat-card>
+</div>

@@ -1,23 +1,24 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy } from '@angular/core';
 import {MovieService} from "../movie.service";
 import {Movie} from "../Movie";
-import {Observable} from "rxjs";
-import {query} from "@angular/animations";
-;
+import {Credits} from "../Credits";
+import {SingleMovie} from "../SingleMovie";
 
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss']
 })
-export class ContentComponent implements OnInit {
+export class ContentComponent implements OnInit, OnDestroy {
 
-  @Input() query!: string;
-
+  movies!: Movie[];
+  single_movie!: SingleMovie;
   trend_movies: Movie[] = [];
-  searched_movies: Movie[] = [];
+  credits!: Credits;
 
-  constructor(private movieService: MovieService) { }
+  constructor(private movieService: MovieService) {
+    this.getMovies();
+  }
 
   ngOnInit(): void {
     this.getTrendingMovies()
@@ -30,11 +31,30 @@ export class ContentComponent implements OnInit {
       })
   }
 
-  searchMovie(query: string) {
-    this.movieService.searchMovies(query)
+  getMovies() {
+    this.movieService.moviesEvent.subscribe((data:any) => {
+      this.movies = data;
+    })
+  }
+
+  getSingleMovie(id: number) {
+    this.movieService.getSingleMovie(id)
       .subscribe((data:any) => {
-        this.searched_movies = data.results;
+        this.single_movie = data;
+        this.movieService.singleMovieEvent.emit(this.single_movie);
       })
+  }
+
+  getCredits(id: number) {
+    this.movieService.getCredits(id)
+      .subscribe((data:any) => {
+        this.credits = data;
+        this.movieService.creditsEvent.emit(this.credits);
+      });
+  }
+
+  ngOnDestroy() {
+
   }
 
 }

@@ -13,11 +13,9 @@
   </nav>
 
   <div>
-    <form action="">
-      <mat-form-field appearance="fill">
-        <mat-label for="search">Search for a Movie</mat-label>
-        <input matInput type="text" id="search" name="search" [(ngModel)]="search: string"  (input)="searchMovies()">
-      </mat-form-field>
-    </form>
+    <mat-form-field appearance="fill">
+      <mat-label>Search for a Movie</mat-label>
+      <input matInput type="text" id="query" name="query" [(ngModel)]="query" (keyup.enter)="searchMovies(query)">
+    </mat-form-field>
   </div>
 </header>

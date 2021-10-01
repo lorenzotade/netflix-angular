@@ -13,6 +13,8 @@ import { SearchComponent } from './search/search.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
+import { SingleMovieComponent } from './single-movie/single-movie.component';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 
 @NgModule({
@@ -21,7 +23,8 @@ import {FormsModule} from "@angular/forms";
     HeaderComponent,
     ContentComponent,
     CardComponent,
-    SearchComponent
+    SearchComponent,
+    SingleMovieComponent
   ],
 	imports: [
 		BrowserModule,
@@ -31,7 +34,8 @@ import {FormsModule} from "@angular/forms";
 		MatCardModule,
 		MatButtonToggleModule,
 		MatInputModule,
-		FormsModule
+		FormsModule,
+		MatExpansionModule
 	],
   providers: [],
   bootstrap: [AppComponent]
