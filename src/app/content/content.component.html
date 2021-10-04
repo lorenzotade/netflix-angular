@@ -1,17 +1,17 @@
-<div *ngIf="!movies" class="container trending">
+<div *ngIf="!movieService.movies" class="container trending">
   <h2>Trending Movies</h2>
   <div class="p-5 d-flex justify-content-around flex-wrap">
-    <div *ngFor="let movie of trend_movies">
-      <app-card [movie]="movie" (click)="getCredits(movie.id); getSingleMovie(movie.id)" routerLink="/movie/{{movie.id}}"></app-card>
+    <div *ngFor="let movie of movieService.trend_movies">
+      <app-card [movie]="movie" (click)="movieService.getCredits(movie.id); movieService.getSingleMovie(movie.id)" routerLink="/movie/{{movie.id}}"></app-card>
     </div>
   </div>
 </div>
 
-<div *ngIf="movies" class="container movies">
+<div *ngIf="movieService.movies" class="container movies">
   <h2>Movies</h2>
   <div class="p-5 d-flex justify-content-around flex-wrap" >
-    <div *ngFor="let movie of movies">
-      <app-card [movie]="movie" (click)="getCredits(movie.id); getSingleMovie(movie.id)" routerLink="/movie/{{movie.id}}"></app-card>
+    <div *ngFor="let movie of movieService.movies">
+      <app-card [movie]="movie" (click)="movieService.getCredits(movie.id); movieService.getSingleMovie(movie.id)" routerLink="/movie/{{movie.id}}"></app-card>
     </div>
   </div>
 </div>

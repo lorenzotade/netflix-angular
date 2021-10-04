@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {Movie} from "../Movie";
 
 @Component({
@@ -6,16 +6,13 @@ import {Movie} from "../Movie";
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
 })
-export class CardComponent implements OnInit {
+export class CardComponent {
 
   @Input() movie!: Movie;
 
   overlay: boolean = false;
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
   toggleOverlay() {
     this.overlay = !this.overlay;

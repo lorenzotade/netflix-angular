@@ -1,8 +1,10 @@
 mat-card-title {
   margin-bottom: 30px;
 }
+
 .credits-container {
   display: flex;
+  justify-content: space-around;
 }
 .cast-container, .crew-container {
   max-width: 450px;
