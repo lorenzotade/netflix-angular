@@ -3,12 +3,17 @@ header {
   justify-content: space-between;
   align-items: center;
   height: 100px;
-  background-color: aqua;
+  background-color: #000000;
   padding: 0 15%;
 }
 
-h1 {
+a {
+  text-decoration: none;
+}
+
+a h1 {
   font-size: 3em;
+  color: #FF0000;
 }
 
 nav {
@@ -23,4 +28,23 @@ nav {
       }
     }
   }
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: #FF0000 !important;
+}
+::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: #FF0000 !important;
+}
+::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: #FF0000 !important;;
+}
+.mat-input-element {
+  color: #FFFFFF;
+}
+mat-label {
+  color: #FFFFFF;
 }

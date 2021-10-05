@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from "@angular/common/http";
 
@@ -12,9 +12,12 @@ import {MatCardModule} from "@angular/material/card";
 import { SearchComponent } from './search/search.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatInputModule} from "@angular/material/input";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { SingleMovieComponent } from './single-movie/single-movie.component';
 import {MatExpansionModule} from "@angular/material/expansion";
+import { MatDatepickerModule} from "@angular/material/datepicker";
+import {MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 @NgModule({
@@ -35,9 +38,15 @@ import {MatExpansionModule} from "@angular/material/expansion";
 		MatButtonToggleModule,
 		MatInputModule,
 		FormsModule,
-		MatExpansionModule
+		MatExpansionModule,
+		MatDatepickerModule,
+		MatNativeDateModule,
+		ReactiveFormsModule,
+		MatCheckboxModule
 	],
-  providers: [],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'it-IT'}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

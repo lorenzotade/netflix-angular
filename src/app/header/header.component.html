@@ -1,10 +1,12 @@
 <header>
-  <h1>Anguflix</h1>
+  <a href="/">
+    <h1>Anguflix</h1>
+  </a>
 
   <nav>
     <ul>
       <li>
-        <a routerLink="/home">Home</a>
+        <a routerLink="/home" (click)="movieService.movies = []">Home</a>
       </li>
       <li>
         <a routerLink="/search">Advanced Search</a>
@@ -13,7 +15,7 @@
   </nav>
 
   <div>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="standard" color="warn">
       <mat-label>Search for a Movie</mat-label>
       <input matInput type="text" id="query" name="query" [(ngModel)]="query" (keyup.enter)="movieService.getMovies(query); query = ''">
     </mat-form-field>

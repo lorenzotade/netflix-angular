@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import {Movie} from "./Movie";
 import {Credits} from "./Credits";
 import {SingleMovie} from "./SingleMovie";
-import {Router} from "@angular/router";
+import {SingleGenre} from "./Genre";
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +14,11 @@ export class MovieService {
   movies?: Movie[];
   single_movie?: SingleMovie;
   credits?: Credits;
+  genres?: SingleGenre[];
+  //top_rated?: Movie[];
   api_key: string = '5ec3e7079b3cb189d8fa0d92bd66a1c9';
 
-  constructor(
-    private http: HttpClient,
-    private router: Router
-  ) { }
+  constructor( private http: HttpClient ) { }
 
   getTrendingMovies() {
     const trend_url = `https://api.themoviedb.org/3/trending/movie/week?api_key=${this.api_key}`;
@@ -35,10 +34,19 @@ export class MovieService {
       this.http.get<any>(search_url)
         .subscribe((data:any) => {
           this.movies = data.results;
-          this.router.navigate(['home']);
+          console.log('tutti film da query',this.movies)
+          //this.router.navigate(['home']);
         });
     }
   }
+
+  /*getTopRated() {
+    let top_url = `https://api.themoviedb.org/3/movie/top_rated?api_key=${this.api_key}&language=en-US&page=1`;
+    this.http.get<any>(top_url)
+      .subscribe((data:any) => {
+        this.top_rated = data.results;
+      });
+  }*/
 
   getSingleMovie(id: number) {
     let movie_url = `https://api.themoviedb.org/3/movie/${id}?api_key=${this.api_key}&language=en-US`;
@@ -50,10 +58,18 @@ export class MovieService {
 
   getCredits(id: number) {
     let credits_url = `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${this.api_key}&language=en-US`;
-    this.http.get(credits_url)
-      .subscribe((data:any) => {
+    this.http.get<Credits>(credits_url)
+      .subscribe((data:Credits) => {
         this.credits = data;
       });
+  }
+
+  getGenres() {
+    let genres_url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${this.api_key}&language=en-US`;
+    this.http.get<any>(genres_url)
+      .subscribe((data:any) => {
+        this.genres = data.genres;
+      })
   }
 
 }
