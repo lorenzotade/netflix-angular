@@ -4,7 +4,7 @@
   <div class="search-container d-flex align-content-start">
     <mat-form-field class="me-2" appearance="fill" color="primary">
       <mat-label>Search for a Movie</mat-label>
-      <input matInput type="text" id="query" name="query" [(ngModel)]="this.movieService.query">
+      <input matInput type="text" id="query" name="query" [(ngModel)]="query">
     </mat-form-field>
 
     <mat-form-field class="me-2" appearance="fill">
@@ -19,7 +19,8 @@
     </section>
 
     <mat-button-toggle
-      (click)="movieService.getMovies(this.movieService.query);
+      (click)="
+      movieService.getMovies(this.query);
       filterMoviesHandler()"
     >Search</mat-button-toggle>
   </div>
@@ -46,7 +47,7 @@
   </div>
 
   <!--TUTTI I FILM DA QUERY-->
-  <div *ngIf="(!searched && !filtered_by_date.length)" class="total p-5 d-flex justify-content-around flex-wrap">
+  <div *ngIf="(!searched && !filtered_by_date.length && !this.flag)" class="total p-5 d-flex justify-content-around flex-wrap">
     <div *ngFor="let movie of movieService.movies">
       <app-card [movie]="movie" (click)="movieService.getCredits(movie.id); movieService.getSingleMovie(movie.id)" routerLink="/movie/{{movie.id}}"></app-card>
     </div>

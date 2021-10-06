@@ -13,10 +13,12 @@ export class SearchComponent {
 
   filtered_by_date: Movie[] = [];
   filtered_by_genre: any = [];
+  query: string = '';
   date_f: any = '';
   arr_genres_ids: number[] = [];
   searched: boolean = false;
   msg: string = '';
+  flag: boolean = false;
 
   constructor(public movieService: MovieService, private datePipe: DatePipe) {
     this.movieService.getGenres();
@@ -37,12 +39,19 @@ export class SearchComponent {
   }
 
   filterMoviesHandler() {
-    setTimeout(() => {
-      this.filterMovies();
-    }, 15);
+    setInterval(() => {
+      if (this.movieService.movies) {
+        this.flag = true;
+        if (this.flag) {
+          this.filterMovies();
+        }
+      }
+    }, 1);
+
   }
 
   filterMovies() {
+    this.flag = false;
     this.msg = '';
     this.searched = false; // SET FLAG FALSE
     if (this.movieService.movies && this.date_f) {
@@ -51,10 +60,10 @@ export class SearchComponent {
       if (this.filtered_by_date.length) {
         this.msg = `Movies from ${date_d}`;
       } else {
-        this.msg = `No movies found from ${date_d} with this query: "${this.movieService.query}", but here are the movies with that query from all time:`;
+        this.msg = `No movies found from ${date_d} with this query: "${this.query}", but here are the movies with that query from all time:`;
       }
     } else if (!this.movieService.movies) {
-      this.msg = `No movies found with this query: ${this.movieService.query}`
+      this.msg = `No movies found with this query: ${this.query}`
     }
     var globalArr:any = [];
     var globalMovieIndex = 0;
@@ -88,7 +97,6 @@ export class SearchComponent {
     else {
       this.filtered_by_genre = [];
     }
-
   } // fine funzione filterMovies
 
 }

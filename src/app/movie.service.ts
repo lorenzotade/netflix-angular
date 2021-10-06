@@ -15,7 +15,6 @@ export class MovieService {
   single_movie?: SingleMovie;
   credits?: Credits;
   genres?: SingleGenre[];
-  query: string = '';
   api_key: string = '5ec3e7079b3cb189d8fa0d92bd66a1c9';
 
   constructor( private http: HttpClient ) { }
@@ -28,14 +27,12 @@ export class MovieService {
       });
   }
 
-  getMovies(query: string) {
-    let search_url = `https://api.themoviedb.org/3/search/movie?api_key=${this.api_key}&language=en-US&page=1&query=${query}`
+  getMovies(query: string, page: number = 1) {
+    let search_url = `https://api.themoviedb.org/3/search/movie?api_key=${this.api_key}&language=en-US&page=${page}&query=${query}`
     if (query.trim()) {
       this.http.get<any>(search_url)
         .subscribe((data:any) => {
           this.movies = data.results;
-          console.log('tutti film da query',this.movies)
-          //this.router.navigate(['home']);
         });
     }
   }
