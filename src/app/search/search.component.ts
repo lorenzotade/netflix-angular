@@ -11,8 +11,8 @@ import {Movie} from "../Movie";
 })
 export class SearchComponent {
 
-  filtered_by_date?: Movie[];
-  filtered_by_genre?: Movie[];
+  filtered_by_date: Movie[] = [];
+  filtered_by_genre: any = [];
   date_f: any = '';
   query: string = '';
   arr_genres_ids: number[] = [];
@@ -42,15 +42,20 @@ export class SearchComponent {
       this.filtered_by_date = this.movieService.movies.filter(movie => movie.release_date >= this.date_f);
       console.log('film per data',this.filtered_by_date)
     }
-    var arr:any = [];
-/****************    if (this.arr_genres_ids.length) {
+    var globalArr:any = [];
+    var globalIdIndex = 0;
+    var globalMovieIndex = 0;
+
+    // FUNZIONA CUMULATIVO SE IL FILM HA ALMENO UN ID
+/****************
+ *  if (this.arr_genres_ids.length) {
       this.arr_genres_ids.forEach(id => {
         this.filtered_by_date?.forEach(movie => {
           if (movie.genre_ids.includes(id)) {
-            arr.push(movie)
+            globalArr.push(movie)
             console.log('temp arr', arr);
           } // fine if movie.genre_ids includes id
-          this.filtered_by_genre = arr;
+          this.filtered_by_genre = globalArr;
         }) //fine foreach filtered_by_date
         //this.filtered_by_genre = this.filtered_by_date?.filter(movie => movie.genre_ids.includes(id));
         console.log('film per genere in foreach',this.filtered_by_genre)
@@ -59,13 +64,30 @@ export class SearchComponent {
     } // fine if arr_genres.length *********************/
 
     if (this.arr_genres_ids.length) {
-      this.arr_genres_ids.forEach(id => {
-        arr = this.filtered_by_date?.filter(movie => movie.genre_ids.includes(id));
-        this.filtered_by_genre = [...arr];
-        console.log('film per genere in foreach',this.filtered_by_genre)
-        console.log('------------------------------------------------------');
-      })
+      this.filtered_by_date.forEach((movie, index) => {
+        globalMovieIndex = index;
+        let check_arr: boolean[] = [];
+        this.arr_genres_ids.forEach((id, index) => {
+          if (this.filtered_by_date[globalMovieIndex].genre_ids.includes(id)) {
+            check_arr.push(true);
+          } else {
+            check_arr.push(false)
+          }
+        }); //fine foreach ids
+        console.log('check arr + movie', this.filtered_by_date[globalMovieIndex].original_title , check_arr);
+        if (!check_arr.includes(false)) {
+          globalArr.push(this.filtered_by_date[globalMovieIndex]);
+        }
+        check_arr = [];
+      }); //fine foreach movies
+      if (globalArr.length) {
+        this.filtered_by_genre = globalArr;
+      } else {
+        this.filtered_by_genre = null;
+      }
+      console.log('filtered by genre', this.filtered_by_genre);
     }
+
 
   } // fine funzione filterMovies
 

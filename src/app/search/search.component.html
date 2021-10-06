@@ -22,18 +22,24 @@
   </div>
 
   <!--TOTAL CONTAINER-->
-  <div *ngIf="filtered_by_date || filtered_by_genre">
-    <h2 class="mt-3" *ngIf="filtered_by_date">Movies from {{date_f | date:'dd MMM YYYY'}}</h2>
-    <h2 class="mt-3" *ngIf="!filtered_by_date">No movies from selected date</h2>
+  <div *ngIf="filtered_by_date.length || filtered_by_genre.length">
+    <h2 class="mt-3" *ngIf="filtered_by_date.length">Movies from {{date_f | date:'dd MMM YYYY'}}</h2>
+    <h2 class="mt-3" *ngIf="!filtered_by_date.length">No movies from selected date</h2>
     <div >
 
-      <!--FILTERED_MOVIES-->
-      <div *ngIf="filtered_by_genre" class="p-5 d-flex justify-content-around flex-wrap">
+      <!--NO FILM CHE MATCHANO-->
+      <div *ngIf="filtered_by_genre === null" class="p-5 d-flex justify-content-around flex-wrap">
+        <h3>No movies with these combined genres.</h3>
+      </div>
+
+      <!--FILM PER GENERI-->
+      <div *ngIf="filtered_by_genre && filtered_by_genre.length" class="p-5 d-flex justify-content-around flex-wrap">
         <div *ngFor="let movie of filtered_by_genre">
           <app-card [movie]="movie" (click)="movieService.getCredits(movie.id); movieService.getSingleMovie(movie.id)" routerLink="/movie/{{movie.id}}"></app-card>
         </div>
       </div>
-      <div *ngIf="!filtered_by_genre" class="p-5 d-flex justify-content-around flex-wrap">
+      <!--SOLO FILM PER DATA-->
+      <div *ngIf="filtered_by_genre && !filtered_by_genre.length" class="p-5 d-flex justify-content-around flex-wrap">
         <div *ngFor="let movie of filtered_by_date">
           <app-card [movie]="movie" (click)="movieService.getCredits(movie.id); movieService.getSingleMovie(movie.id)" routerLink="/movie/{{movie.id}}"></app-card>
         </div>
