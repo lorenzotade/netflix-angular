@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {MatDatepickerInputEvent} from "@angular/material/datepicker";
-import {formatDate} from "@angular/common";
+import {DatePipe, formatDate} from "@angular/common";
 import {MovieService} from "../movie.service";
 import {Movie} from "../Movie";
 
@@ -14,17 +14,17 @@ export class SearchComponent {
   filtered_by_date: Movie[] = [];
   filtered_by_genre: any = [];
   date_f: any = '';
-  query: string = '';
   arr_genres_ids: number[] = [];
+  searched: boolean = false;
+  msg: string = '';
 
-  constructor(public movieService: MovieService) {
+  constructor(public movieService: MovieService, private datePipe: DatePipe) {
     this.movieService.getGenres();
   }
 
   getDate(event: MatDatepickerInputEvent<any>) {
     let date: any = event.value;
     this.date_f = formatDate(date, 'YYYY-MM-dd', 'en-US');
-
   }
 
   getGenreId(event:any, id: number) {
@@ -34,19 +34,66 @@ export class SearchComponent {
     if (!event.checked) {
       this.arr_genres_ids.splice(this.arr_genres_ids.indexOf(id), 1);
     }
-    console.log('id generi', this.arr_genres_ids);
+  }
+
+  filterMoviesHandler() {
+    setTimeout(() => {
+      this.filterMovies();
+    }, 15);
   }
 
   filterMovies() {
+    this.msg = '';
+    this.searched = false; // SET FLAG FALSE
     if (this.movieService.movies && this.date_f) {
-      this.filtered_by_date = this.movieService.movies.filter(movie => movie.release_date >= this.date_f);
-      console.log('film per data',this.filtered_by_date)
+      this.filtered_by_date = this.movieService.movies!.filter(movie => movie.release_date >= this.date_f);
+      let date_d = this.datePipe.transform(this.date_f, 'dd MMM YYYY');
+      if (this.filtered_by_date.length) {
+        this.msg = `Movies from ${date_d}`;
+      } else {
+        this.msg = `No movies found from ${date_d} with this query: "${this.movieService.query}", but here are the movies with that query from all time:`;
+      }
+    } else if (!this.movieService.movies) {
+      this.msg = `No movies found with this query: ${this.movieService.query}`
     }
     var globalArr:any = [];
-    var globalIdIndex = 0;
     var globalMovieIndex = 0;
 
-    // FUNZIONA CUMULATIVO SE IL FILM HA ALMENO UN ID
+    if (this.arr_genres_ids.length) {
+      this.filtered_by_date.forEach((movie, index) => {
+        globalMovieIndex = index;
+        let check_arr: boolean[] = [];
+        this.arr_genres_ids.forEach(id => {
+          if (this.filtered_by_date[globalMovieIndex].genre_ids.includes(id)) {
+            check_arr.push(true);
+          } else {
+            check_arr.push(false)
+          }
+        }); //fine foreach ids
+        if (!check_arr.includes(false)) {
+          globalArr.push(this.filtered_by_date[globalMovieIndex]);
+        }
+        this.searched = true; // FLAG CHECK
+        check_arr = [];
+      }); //fine foreach movies
+      if (globalArr.length) {
+        this.filtered_by_genre = globalArr;
+        this.msg = `Movies having the selected genres:`
+        globalArr = [];
+      } else {
+        this.filtered_by_genre = [];
+      }
+      console.log('filtered by genre', this.filtered_by_genre);
+    } //fine if array_genres_ids.length
+    else {
+      this.filtered_by_genre = [];
+    }
+
+  } // fine funzione filterMovies
+
+}
+
+// FUNZIONA CUMULATIVO SE IL FILM HA ALMENO UN ID
 /****************
  *  if (this.arr_genres_ids.length) {
       this.arr_genres_ids.forEach(id => {
@@ -62,33 +109,3 @@ export class SearchComponent {
         console.log('------------------------------------------------------');
       }) // fine foreach arr_genres_id
     } // fine if arr_genres.length *********************/
-
-    if (this.arr_genres_ids.length) {
-      this.filtered_by_date.forEach((movie, index) => {
-        globalMovieIndex = index;
-        let check_arr: boolean[] = [];
-        this.arr_genres_ids.forEach((id, index) => {
-          if (this.filtered_by_date[globalMovieIndex].genre_ids.includes(id)) {
-            check_arr.push(true);
-          } else {
-            check_arr.push(false)
-          }
-        }); //fine foreach ids
-        console.log('check arr + movie', this.filtered_by_date[globalMovieIndex].original_title , check_arr);
-        if (!check_arr.includes(false)) {
-          globalArr.push(this.filtered_by_date[globalMovieIndex]);
-        }
-        check_arr = [];
-      }); //fine foreach movies
-      if (globalArr.length) {
-        this.filtered_by_genre = globalArr;
-      } else {
-        this.filtered_by_genre = null;
-      }
-      console.log('filtered by genre', this.filtered_by_genre);
-    }
-
-
-  } // fine funzione filterMovies
-
-}

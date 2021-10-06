@@ -15,7 +15,7 @@ export class MovieService {
   single_movie?: SingleMovie;
   credits?: Credits;
   genres?: SingleGenre[];
-  //top_rated?: Movie[];
+  query: string = '';
   api_key: string = '5ec3e7079b3cb189d8fa0d92bd66a1c9';
 
   constructor( private http: HttpClient ) { }
@@ -39,14 +39,6 @@ export class MovieService {
         });
     }
   }
-
-  /*getTopRated() {
-    let top_url = `https://api.themoviedb.org/3/movie/top_rated?api_key=${this.api_key}&language=en-US&page=1`;
-    this.http.get<any>(top_url)
-      .subscribe((data:any) => {
-        this.top_rated = data.results;
-      });
-  }*/
 
   getSingleMovie(id: number) {
     let movie_url = `https://api.themoviedb.org/3/movie/${id}?api_key=${this.api_key}&language=en-US`;
