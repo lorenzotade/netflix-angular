@@ -6,10 +6,10 @@
   <nav>
     <ul>
       <li>
-        <a routerLink="/home" (click)="movieService.movies = []">Home</a>
+        <a routerLink="/home" (click)="this.movieService.query = ''; movieService.movies = []; this.movieService.getTrendingMovies()">Home</a>
       </li>
       <li>
-        <a routerLink="/search">Advanced Search</a>
+        <a routerLink="/search" (click)="this.movieService.query = ''; movieService.movies = []">Advanced Search</a>
       </li>
     </ul>
   </nav>
@@ -17,7 +17,10 @@
   <div>
     <mat-form-field appearance="standard" color="warn">
       <mat-label>Search for a Movie</mat-label>
-      <input matInput type="text" id="query" name="query" [(ngModel)]="query" (keyup.enter)="movieService.getMovies(query); query = ''">
+      <input matInput type="text" id="query" name="query"
+             [(ngModel)]="this.movieService.query"
+             (keyup.enter)="movieService.getMovies(this.movieService.query, 1)"
+      >
     </mat-form-field>
   </div>
 </header>

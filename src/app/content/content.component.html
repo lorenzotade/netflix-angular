@@ -1,4 +1,10 @@
-<div *ngIf="!movieService.movies || movieService.movies.length === 0" class="container trending">
+<div *ngIf="!movieService.movies || movieService.movies?.length === 0" class="container trending">
+  <mat-paginator [length]="this.movieService.totPages"
+                 [pageIndex]="0"
+                 [pageSize]="20"
+                 (page)="this.getTrendingPaginatorData($event); this.movieService.movies = []"
+                 aria-label="Select page">
+  </mat-paginator>
   <h1 class="mt-3">Trending Movies</h1>
   <div class="p-5 d-flex justify-content-around flex-wrap">
     <div *ngFor="let movie of movieService.trend_movies">
@@ -7,8 +13,17 @@
   </div>
 </div>
 
-<div *ngIf="movieService.movies && movieService.movies.length !== 0" class="container movies">
-  <mat-button-toggle class="mt-3">Go back</mat-button-toggle>
+<div *ngIf="movieService.movies?.length !== 0" class="container movies">
+  <mat-button-toggle
+    class="mt-3"
+    (click)="movieService.movies = []; movieService.query = ''"
+  >Go back</mat-button-toggle>
+  <mat-paginator [length]="this.movieService.totPages"
+                 [pageIndex]="0"
+                 [pageSize]="20"
+                 (page)="this.getMoviesPaginatorData($event)"
+                 aria-label="Select page">
+  </mat-paginator>
   <h1 class="mt-3">Movies</h1>
   <div class="p-5 d-flex justify-content-around flex-wrap" >
     <div *ngFor="let movie of movieService.movies">

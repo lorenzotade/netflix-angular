@@ -18,6 +18,7 @@ import { MatExpansionModule } from "@angular/material/expansion";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MAT_DATE_LOCALE, MatNativeDateModule } from "@angular/material/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatPaginatorModule } from "@angular/material/paginator";
 import { DatePipe } from "@angular/common";
 
 @NgModule({
@@ -42,7 +43,8 @@ import { DatePipe } from "@angular/common";
 		MatDatepickerModule,
 		MatNativeDateModule,
 		ReactiveFormsModule,
-		MatCheckboxModule
+		MatCheckboxModule,
+    MatPaginatorModule
 	],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'it-IT'},

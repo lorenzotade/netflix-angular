@@ -8,8 +8,6 @@ import { MovieService } from "../movie.service";
 })
 export class HeaderComponent{
 
-  query: string = '';
-
   constructor( public movieService: MovieService ) { }
 
 }

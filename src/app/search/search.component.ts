@@ -3,6 +3,7 @@ import {MatDatepickerInputEvent} from "@angular/material/datepicker";
 import {DatePipe, formatDate} from "@angular/common";
 import {MovieService} from "../movie.service";
 import {Movie} from "../Movie";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-search',
@@ -18,7 +19,6 @@ export class SearchComponent {
   arr_genres_ids: number[] = [];
   searched: boolean = false;
   msg: string = '';
-  flag: boolean = false;
 
   constructor(public movieService: MovieService, private datePipe: DatePipe) {
     this.movieService.getGenres();
@@ -38,24 +38,11 @@ export class SearchComponent {
     }
   }
 
-  filterMoviesHandler() {
-    setInterval(() => {
-      if (this.movieService.movies) {
-        this.flag = true;
-        if (this.flag) {
-          this.filterMovies();
-        }
-      }
-    }, 1);
-
-  }
-
   filterMovies() {
-    this.flag = false;
     this.msg = '';
     this.searched = false; // SET FLAG FALSE
     if (this.movieService.movies && this.date_f) {
-      this.filtered_by_date = this.movieService.movies!.filter(movie => movie.release_date >= this.date_f);
+      this.filtered_by_date = this.movieService.movies.filter(movie => movie.release_date >= this.date_f);
       let date_d = this.datePipe.transform(this.date_f, 'dd MMM YYYY');
       if (this.filtered_by_date.length) {
         this.msg = `Movies from ${date_d}`;
@@ -98,6 +85,20 @@ export class SearchComponent {
       this.filtered_by_genre = [];
     }
   } // fine funzione filterMovies
+
+  getMoviesPaginatorData(event?: PageEvent) {
+    this.movieService.getMovies(this.query, event ? event!.pageIndex + 1 : 1, this.filterMovies())
+    console.log(this.movieService.movies)
+  }
+  getDatePaginatorData(event: PageEvent) {
+    this.movieService.getMovies(this.query, event.pageIndex + 1, this.filterMovies())
+    console.log(this.filtered_by_date);
+  }
+  getGenresPaginatorData(event: PageEvent) {
+    this.movieService.getMovies(this.query, event.pageIndex + 1, this.filterMovies())
+    console.log(this.filtered_by_genre);
+  }
+
 
 }
 
